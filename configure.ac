@@ -19,6 +19,12 @@ AC_ARG_WITH(libiberty,
 	[ ac_libiberty=NONE ]
 )
 
+AC_ARG_WITH(libiberty-include-dir,
+	AS_HELP_STRING([--with-libiberty-include-dir=<dir>], [path to libiberty includes]),
+	[ ac_libiberty_include_dir=$withval ],
+	[ ac_libiberty_include_dir=NONE ]
+)
+
 AC_ARG_WITH(bfd-include-dir,
 	AS_HELP_STRING([--with-bfd-include-dir=<dir>], [include path for correct bfd.h]),
 	[ ac_bfd_include_dir=$withval ],
@@ -106,6 +112,8 @@ AC_PROG_CC
 AC_USE_SYSTEM_EXTENSIONS
 AC_PROG_INSTALL
 
+
+dnl FIXME: this is not true on plain debian based installs (Debian,Raspbian,Devuan,etc)
 if test "$ac_binutils_build_dir" != "NONE"; then
   test "$ac_libbfd"               = "NONE" && ac_libbfd="$ac_binutils_build_dir/bfd/libbfd.a"
   test "$ac_libiberty"            = "NONE" && ac_libiberty="$ac_binutils_build_dir/libiberty/libiberty.a"
@@ -141,6 +149,11 @@ fi
 binutils_include_dir=
 if test "$ac_binutils_include_dir" != "NONE"; then
   binutils_include_dir=$(cd "$ac_binutils_include_dir" && pwd)
+fi
+
+libiberty_include_dir=
+if test "$ac_libiberty_include_dir" != "NONE"; then
+  libiberty_include_dir=$(cd "$ac_libiberty_include_dir" && pwd)
 fi
 
 zlib_include_dir=
@@ -197,7 +210,7 @@ AC_CHECK_LIB(dl, dlopen, LIBS="$LIBS -ldl")
 
 dnl Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS(fcntl.h unistd.h bfd.h)
+AC_CHECK_HEADERS(fcntl.h unistd.h zlib.h bfd.h libiberty.h)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -227,6 +240,7 @@ AC_SUBST(target_os)
 AC_SUBST(target_vendor)
 AC_SUBST(bfd_include_dir)
 AC_SUBST(binutils_include_dir)
+AC_SUBST(libiberty_include_dir)
 AC_SUBST(zlib_include_dir)
 AC_SUBST(binutils_ldscript_dir)
 AC_SUBST(use_ld_elf2flt_binary)

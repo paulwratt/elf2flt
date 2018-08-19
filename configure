@@ -630,6 +630,7 @@ use_ld_elf2flt_binary
 binutils_ldscript_dir
 zlib_include_dir
 binutils_include_dir
+libiberty_include_dir
 bfd_include_dir
 INSTALL_DATA
 INSTALL_SCRIPT
@@ -700,6 +701,7 @@ enable_option_checking
 with_zlib_prefix
 with_libbfd
 with_libiberty
+with_libiberty_include_dir
 with_bfd_include_dir
 with_binutils_include_dir
 with_binutils_ldscript_dir
@@ -1349,6 +1351,8 @@ Optional Packages:
                           path to installed zlib
   --with-libbfd=<file>    path to libbfd.a library to use
   --with-libiberty=<file> path to libiberty.a library to use
+  --with-libiberty-include-dir=<dir>
+                          include path for libiberty headers
   --with-bfd-include-dir=<dir>
                           include path for correct bfd.h
   --with-binutils-include-dir=<dir>
@@ -2174,6 +2178,16 @@ if test "${with_libiberty+set}" = set; then :
   withval=$with_libiberty;  ac_libiberty=$withval
 else
    ac_libiberty=NONE
+
+fi
+
+
+
+# Check whether --libiberty-include-dir was given.
+if test "${libiberty_include_dir+set}" = set; then :
+  withval=$libiberty_include_dir;  ac_libiberty_include_dir=$withval
+else
+   ac_libiberty_include_dir=NONE
 
 fi
 
@@ -3939,6 +3953,11 @@ if test "$ac_binutils_include_dir" != "NONE"; then
   binutils_include_dir=$(cd "$ac_binutils_include_dir" && pwd)
 fi
 
+libiberty_include_dir=
+if test "$ac_libiberty_include_dir" != "NONE"; then
+  libiberty_include_dir=$(cd "$ac_libiberty_include_dir" && pwd)
+fi
+
 zlib_include_dir=
 if test "$ac_zlib_prefix" != "NONE"; then
   zlib_include_dir="-I$ac_zlib_prefix/include"
@@ -4176,7 +4195,7 @@ $as_echo "#define STDC_HEADERS 1" >>confdefs.h
 
 fi
 
-for ac_header in fcntl.h unistd.h bfd.h
+for ac_header in fcntl.h unistd.h zlib.h bfd.h libiberty.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"

@@ -20,14 +20,19 @@ build this tool. They are normally part of the binutils package.
 
 To compile elf2flt do:
 
-    ./configure --target=<ARCH> --with-libbfd=<libbfd.a> --with-libiberty=<libiberty.a>
+    ./configure --target=<ARCH> --with-bfd-include-dir=/usr/include --with-libbfd=<libbfd.a> --with-libiberty=<libiberty.a>
     make
     make install
 
 The <ARCH> argument to configure specifies what the target architecture is.
-This should be the same target as you used to build the binutils and gcc
-cross development tools. The `--with-libbfd` and `--with-libiberty` arguments
-specify where the libbfd.a and libiberty.a library files are to use.
+This should be the same target as you used to build the binutils and gcc 
+cross development tools. The `--with-bfd-include-dir` argument is the folder 
+which contains `bfd.h` from `binutils-dev`, which is then linked to in 
+`bfd-headers/bfd.h`. The `--with-libbfd` and `--with-libiberty` arguments 
+specify where the `libbfd.a` and `libiberty.a` library files are to use.
+
+NOTE: if make cant find `libiberty.h`, use `dpkg --serach _file_.h` if you dont know where they are, and edit `LIBIBERTY_INCLUDE_DIR`. This allows you 
+to also use a non-system installed set if you choose.
 
 ## Files
 

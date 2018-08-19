@@ -19,7 +19,10 @@
 #include <assert.h>
 
 #include "compress.h"
-#include <libiberty.h>
+
+/* #include <libiberty/libiberty.h> */
+/* from $(INSTALLDIR)/include       */
+#include "libiberty.h"	/* must be linked first */
 
 #include "stubs.h"
 const char *elf2flt_progname;
@@ -33,6 +36,8 @@ const char *elf2flt_progname;
 
 #if defined TARGET_bfin
 # define flat_get_relocate_addr(addr) (addr & 0x03ffffff)
+#elif defined TARGET_rpi
+# define flat_get_relocate_addr(addr) (addr & 0x00008000)
 #else
 # define flat_get_relocate_addr(addr) (addr)
 #endif

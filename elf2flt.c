@@ -49,13 +49,16 @@
 
 /* from $(INSTALLDIR)/include       */
 #include <bfd.h>      /* Main header file for the BFD library                */
-#include <libiberty.h>
+
+/* #include <libiberty/libiberty.h> */
+/* from $(INSTALLDIR)/include       */
+#include "libiberty.h"	/* must be linked first */
 
 #include "stubs.h"
 const char *elf2flt_progname;
 
 /* Include the right header file for the R_xxx defines.  */
-#if defined(TARGET_arm)
+#if defined(TARGET_arm) || defined(TARGET_rpi)
 #include <elf/arm.h>
 #elif defined(TARGET_bfin)
 #include <elf/bfin.h>

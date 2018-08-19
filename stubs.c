@@ -4,7 +4,9 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "libiberty.h"
+/* #include <libiberty/libiberty.h> */
+/* from $(INSTALLDIR)/include       */
+#include "libiberty.h"	/* must be linked first */
 
 #include "stubs.h"
 

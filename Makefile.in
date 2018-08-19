@@ -17,6 +17,7 @@ CFLAGS = @CFLAGS@
 INCLUDES = -I$(srcdir) -Ibfd-headers @zlib_include_dir@
 BFD_INCLUDE_DIR = @bfd_include_dir@
 BINUTILS_INCLUDE_DIR = @binutils_include_dir@
+LIBIBERTY_INCLUDE_DIR = @libiberty_include_dir@
 CPPFLAGS = @CPPFLAGS@ $(DEFS) $(INCLUDES)
 LDFLAGS = @LDFLAGS@
 LDLIBS = @LIBS@
@@ -127,8 +128,11 @@ bfd-headers/.stamp:
 	rm -rf bfd-headers
 	mkdir bfd-headers
 	ln -sf $(BFD_INCLUDE_DIR)/bfd.h bfd-headers/bfd.h
-	for f in ansidecl filenames hashtab libiberty symcat; do \
+	for f in filenames symcat; do \
 		ln -sf $(BINUTILS_INCLUDE_DIR)/$$f.h bfd-headers/$$f.h || exit 1; \
+	done
+	for f in ansidecl hashtab libiberty; do \
+		ln -sf $(LIBIBERTY_INCLUDE_DIR)/$$f.h bfd-headers/$$f.h || exit 1; \
 	done
 	ln -sf $(BINUTILS_INCLUDE_DIR)/elf bfd-headers/elf
 	touch $@

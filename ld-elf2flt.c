@@ -23,7 +23,11 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
-#include <libiberty.h>
+
+/* #include <libiberty/libiberty.h> */
+/* from $(INSTALLDIR)/include       */
+#include "libiberty.h"	/* must be linked first */
+
 #include <filenames.h>
 
 #include "stubs.h"
